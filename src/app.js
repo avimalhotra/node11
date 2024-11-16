@@ -1,36 +1,23 @@
-const http=require("http");
-const fs=require("fs");
-const path=require("path");
-const port=8080;
+const express=require("express");
+require('dotenv').config();
 
-http.createServer((req,res)=>{
-    // res.write("Hello HTTP");  
-    res.setHeader('Content-Type','text/html');
-    // res.write("<h1>Hello HTTP</h1>");  
-    // res.end();
+const port=process.env.PORT || 8080;
 
-    if(req.url=="/" && req.method=="GET"){
-        fs.readFile(path.resolve("src/index.html"),{encoding:'utf8'},(err,data)=>{
-            if(err){
-                res.statusCode=404;
-                res.write("404, page not found");  
-                res.end();
-             }
-            else{
-                res.statusCode=200;
-                res.write(data);  
-                res.end();
-            }
-        });
-    }
-    else{
-        res.statusCode=404;
-        res.write("Request not found");  
-        res.end();
-    }
+const app=express();
 
+// app.use((req,res,next)=>{
+//     // console.log("Middlewere");
+//     next();
+// });
 
+app.get("/",(req,res)=>{
+    res.send("Hello Express");
+});
 
-}).listen(port,()=>{
+app.get("/api",(req,res)=>{
+    return res.json([{name:"a", id:1},{name:"b", id:2}]);
+});
+
+app.listen(port,()=>{
     console.log(`App running at http://127.0.0.1:${port}`);
 });
