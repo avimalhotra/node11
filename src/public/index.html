@@ -8,11 +8,46 @@
 </head>
 <body>
     <div class="container">
-        <h1>Hello Express JS</h1>
+        <header>
+            <h1>Hello Express JS</h1>
+        </header>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/product">Product</a>
+        </nav>
+        <main>
         <img src="bat.svg" alt="batman" width="300" height="120">
         <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Commodi aspernatur reiciendis necessitatibus aliquam! Sit, earum. Autem eaque doloribus laborum, earum aspernatur quidem soluta at debitis non. Neque quibusdam consectetur numquam!</p>
         <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Commodi aspernatur reiciendis necessitatibus aliquam! Sit, earum. Autem eaque doloribus laborum, earum aspernatur quidem soluta at debitis non. Neque quibusdam consectetur numquam!</p>
+
+        <!-- <h3>Get</h3>
+        <form action="/search" method="get" class="getform">
+            <label>Mobile: <input type="search" name="mobile" required> </label>
+            <label>Variant: <input type="text" name="variant" required> </label>
+            <label>Color: <select name="color">
+                <option disabled selected value="">--Choose Color--</option>
+                <option>Space Gray</option>
+                <option>Silver</option>
+                <option>Sky Blue</option>
+                <option>Pink</option>
+            </select> </label>
+            <button type="submit">Search</button>
+        </form> -->
+        </main>
     </div>
-<script src="common.js"></script>    
+<script>
+    "use strict";
+
+    // document.querySelector(".getform").addEventListener("submit",function(e){
+    //     e.preventDefault();
+
+    //     const mobile=this.mobile.value;
+    //     const variant=this.variant.value;
+    //     const color=this.color.value;
+
+    //     console.log( mobile, variant, color );
+
+    // });
+</script>    
 </body>
 </html>
