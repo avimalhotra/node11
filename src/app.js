@@ -7,20 +7,29 @@ const port=process.env.PORT || 8080;
 const app=express();
 const admin=require("./routes/admin"), user=require("./routes/user");
 
-// app.use(express.static(path.resolve("src/public")));
+//  app.use(express.static(path.resolve("src/public")));
+
+//  const bp=require("body-parser");
+// app.use(bp.json());
+// parse application/x-www-form-urlencoded
+// app.use(bp.urlencoded({ extended: false }));
+
+
+const cp=require('cookie-parser');
+app.use(cp('secret'));
+
 
 /* middleware */
-app.use((req,res,next)=>{
-    // res.status(200).send(`Hello Express, ${new Date().toLocaleString()}`);
-    //  console.log(`${req.url}`);
-    next();
-});
-
+// app.use((req,res,next)=>{
+//     // res.status(200).send(`Hello Express, ${new Date().toLocaleString()}`);
+//     // console.log(`${req.url}`);
+//     next();
+// });
 
 /* routes */
- app.get("/",(req,res)=>{
+ app.get("/",(req,res)=>{    
     res.setHeader('Content-Type','text/html');
-    res.status(200).send("Hello Express App");
+    res.status(200).send(`Hello Express App`);
 });
 app.get("/api",(req,res)=>{
     res.status(200).json([{name:"user", id:22},{name:"lorem", id:23}]);
@@ -44,9 +53,7 @@ app.get("/api",(req,res)=>{
 app.get("/product",(req,res)=>{
     res.status(200).send("product Page");
 });
-// app.get("/products",(req,res)=>{
-//     res.status(200).redirect("/product")
-// });
+
 app.get("/product/:brand",(req,res)=>{
     res.status(200).send(`Brand: ${req.params.brand}`);
 });
@@ -57,9 +64,29 @@ app.get("/product/:brand/:product/:variant",(req,res)=>{
     res.status(200).send(`Brand: ${req.params.brand}, Product: ${req.params.product}, Variant: ${req.params.variant}`);
 });
 
+app.get("/cookie",(req,res)=>{
+    
+    //  res.cookie("id","200");
+    // res.cookie("city","noida",{signed:true});
+    // res.cookie("state","noida",{maxAge:86400000});
 
+    res.status(200).send(req.cookies);
+    
+})
+
+
+/* post methods */
 app.post("/post",(req,res)=>{
     res.status(200).send("Post App working ✓");
+});
+app.post("/signup",(req,res)=>{
+    const mail=req.body.email, pass=req.body.password;
+    if( mail=="user@mail" && pass=="123456" ){
+        res.status(200).send("Valid");
+    }
+    else{
+        res.status(200).send("Invalid ");
+    }
 });
 
 
