@@ -7,7 +7,7 @@ const port=process.env.PORT || 8080;
 const app=express();
 const admin=require("./routes/admin"), user=require("./routes/user");
 
-//  app.use(express.static(path.resolve("src/public")));
+ app.use(express.static(path.resolve("src/public")));
 
 //  const bp=require("body-parser");
 // app.use(bp.json());
@@ -15,26 +15,47 @@ const admin=require("./routes/admin"), user=require("./routes/user");
 // app.use(bp.urlencoded({ extended: false }));
 
 
-const cp=require('cookie-parser');
-app.use(cp('secret'));
+// const cp=require('cookie-parser');
+// app.use(cp('secret'));
+
+// const session=require("express-session");
+// // trust first proxy
+// app.set('trust proxy', 1);
+// app.use(session({
+//     secret:"session",
+//     resave:false,
+//     saveUninitialized:true,
+//     cookie:{secure:false,maxAge:3000}
+// }));
+
+// const parseurl=require('parseurl');
 
 
 /* middleware */
-// app.use((req,res,next)=>{
-//     // res.status(200).send(`Hello Express, ${new Date().toLocaleString()}`);
-//     // console.log(`${req.url}`);
-//     next();
-// });
+/* app.use((req,res,next)=>{
+    if (!req.session.views) {
+        req.session.views = {};
+    }
+    const pathname = parseurl(req).pathname;
+    // count the views
+    req.session.views[pathname] = (req.session.views[pathname] || 0) + 1;
+
+    next();
+}); */
 
 /* routes */
  app.get("/",(req,res)=>{    
     res.setHeader('Content-Type','text/html');
+    // res.status(200).send(`Hello Express App , Session id: ${req.sessionID}, Views: ${ req.session.views['/'] }`);
     res.status(200).send(`Hello Express App`);
 });
 app.get("/api",(req,res)=>{
-    res.status(200).json([{name:"user", id:22},{name:"lorem", id:23}]);
+    // enable CORS policies
+    res.header('Access-Control-Allow-Origin',"*");
+    const data=[{name:"user", id:22},{name:"lorem", id:23}];
+    return res.status(200).json(data);
 });
- app.get("/login",(req,res)=>{
+app.get("/login",(req,res)=>{
     res.setHeader('Content-Type','text/html');
     res.status(200).send("Login Page");
 });
@@ -104,3 +125,6 @@ app.use("/user",user);
 app.listen(port,()=>{
     console.log(`App running at http://127.0.0.1:${port}`);
 });
+
+
+

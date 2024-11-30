@@ -57,6 +57,9 @@
     //     console.log( mobile, variant, color );
 
     // });
+
+    fetch('http://127.0.0.1:3000/api').then(i=>i.json()).then(i=>console.table(i)).catch(i=>console.warn(i));
+
 </script>    
 </body>
 </html>
