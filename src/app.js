@@ -9,8 +9,9 @@ const admin=require("./routes/admin"), user=require("./routes/user");
 
  app.use(express.static(path.resolve("src/public")));
 
-//  const bp=require("body-parser");
-// app.use(bp.json());
+ const bp=require("body-parser");
+app.use(bp.text());
+
 // parse application/x-www-form-urlencoded
 // app.use(bp.urlencoded({ extended: false }));
 
@@ -55,6 +56,25 @@ app.get("/api",(req,res)=>{
     const data=[{name:"user", id:22},{name:"lorem", id:23}];
     return res.status(200).json(data);
 });
+
+app.post("/search",(req,res)=>{
+    const x=req.body;
+    const y=JSON.parse(x).query;
+
+    const data=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug"];
+
+    const z=data.filter(i=>i.toLowerCase().includes(y));
+
+    if(z.length!=0 || y.length!=0){
+        res.status(200).send( z );
+    }
+    else{
+        res.status(200).send(["no data"]);
+    }
+    
+});
+
+
 app.get("/login",(req,res)=>{
     res.setHeader('Content-Type','text/html');
     res.status(200).send("Login Page");
@@ -63,11 +83,11 @@ app.get("/login",(req,res)=>{
     res.setHeader('Content-Type','text/html');
     res.status(200).send("Logout Page");
 });
+
 // app.get("/search",(req,res)=>{
 //     const mobile=req.query.mobile;
 //     const variant=req.query.variant;
 //     const color=req.query.color;
-
 //     res.status(200).send(`Mobile: ${mobile}, Variant : ${variant} and Color : ${color}`);
 // });
 
@@ -92,8 +112,8 @@ app.get("/cookie",(req,res)=>{
     // res.cookie("state","noida",{maxAge:86400000});
 
     res.status(200).send(req.cookies);
-    
-})
+
+});
 
 
 /* post methods */

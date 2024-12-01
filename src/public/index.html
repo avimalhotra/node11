@@ -18,8 +18,7 @@
         <main>
         <!-- <img src="bat.svg" alt="batman" width="300" height="120"> -->
         <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Commodi aspernatur reiciendis necessitatibus aliquam! Sit, earum. Autem eaque doloribus laborum, earum aspernatur quidem soluta at debitis non. Neque quibusdam consectetur numquam!</p>
-        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Commodi aspernatur reiciendis necessitatibus aliquam! Sit, earum. Autem eaque doloribus laborum, earum aspernatur quidem soluta at debitis non. Neque quibusdam consectetur numquam!</p>
-
+       
         <!-- <h3>Get</h3>
         <form action="/search" method="get" class="getform">
             <label>Mobile: <input type="search" name="mobile" required> </label>
@@ -35,12 +34,16 @@
         </form> -->
 
         <h2>Post</h2>
-        <form action="/signup" method="post">
+        <!-- <form action="/signup" method="post">
             <label>Email: <input type="email" name="email" required> </label>
             <label>Password: <input type="password" name="password" required> </label>
             <button>Sign up</button>
-            </form>
+        </form> -->
 
+        <form>
+            <label>Search: <input type="search" name="query" list="month" required></label> <button class="btn">Submit</button>
+            <datalist id="month"></datalist>
+        </form>
 
         </main>
     </div>
@@ -58,7 +61,18 @@
 
     // });
 
-    fetch('http://127.0.0.1:3000/api').then(i=>i.json()).then(i=>console.table(i)).catch(i=>console.warn(i));
+    // fetch('http://127.0.0.1:3000/api').then(i=>i.json()).then(i=>console.table(i)).catch(i=>console.warn(i));
+
+    document.querySelector('input[type="search"]').addEventListener("input",function(){
+        document.querySelector("#month").innerHTML="";
+        
+        fetch("/search",{method:"POST",body:JSON.stringify({"query":this.value})}).then(i=>i.json()).then(i=>{
+            i.forEach(j=>{
+                document.querySelector("#month").innerHTML+=`<option>${j}</option>`;
+            });
+        }).catch(e=>console.warn(e));
+        
+    });
 
 </script>    
 </body>
