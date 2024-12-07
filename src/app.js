@@ -10,7 +10,21 @@ const admin=require("./routes/admin"), user=require("./routes/user");
  app.use(express.static(path.resolve("src/public")));
 
  const bp=require("body-parser");
-app.use(bp.text());
+app.use(bp.json());
+
+
+const multer=require("multer");
+// const upload = multer({ dest: 'src/public/uploads/' });
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, 'src/public/uploads/')
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.originalname);          // for original name 
+        // cb(null, Date.now() + path.extname(file.originalname)) 
+    }
+  });
+const upload=multer({storage:storage});
 
 // parse application/x-www-form-urlencoded
 // app.use(bp.urlencoded({ extended: false }));
@@ -50,6 +64,27 @@ app.use(bp.text());
     // res.status(200).send(`Hello Express App , Session id: ${req.sessionID}, Views: ${ req.session.views['/'] }`);
     res.status(200).send(`Hello Express App`);
 });
+
+/* upload */
+
+    
+app.post('/upload',upload.single('resume'),(req,res)=>{
+    // req.file is the picture
+    // req.body is text inputs
+    // console.log(req.file);
+    res.status(200).send("File Uploaded");
+});
+
+// app.post('/upload',upload.array('resume',2),(req,res)=>{
+//     // req.files is array of files
+//     // req.body is text inputs
+//      console.log(req.files);
+//     res.status(200).send("Files Uploaded");
+// });
+
+
+
+/* API */
 app.get("/api",(req,res)=>{
     // enable CORS policies
     res.header('Access-Control-Allow-Origin',"*");

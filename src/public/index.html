@@ -33,16 +33,22 @@
             <button type="submit">Search</button>
         </form> -->
 
-        <h2>Post</h2>
+        <!-- <h2>Post</h2> -->
         <!-- <form action="/signup" method="post">
             <label>Email: <input type="email" name="email" required> </label>
             <label>Password: <input type="password" name="password" required> </label>
             <button>Sign up</button>
         </form> -->
 
-        <form>
+      <!--   <form>
             <label>Search: <input type="search" name="query" list="month" required></label> <button class="btn">Submit</button>
             <datalist id="month"></datalist>
+        </form> -->
+
+        <h2>Upload</h2>
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            <label>Upload: <input type="file" accept=".pdf,.doc,.docx" required name="resume"></label>
+            <button>Upload</button>
         </form>
 
         </main>
@@ -63,16 +69,17 @@
 
     // fetch('http://127.0.0.1:3000/api').then(i=>i.json()).then(i=>console.table(i)).catch(i=>console.warn(i));
 
-    document.querySelector('input[type="search"]').addEventListener("input",function(){
+    /* document.querySelector('input[type="search"]').addEventListener("input",function(){
         document.querySelector("#month").innerHTML="";
         
         fetch("/search",{method:"POST",body:JSON.stringify({"query":this.value})}).then(i=>i.json()).then(i=>{
             i.forEach(j=>{
                 document.querySelector("#month").innerHTML+=`<option>${j}</option>`;
             });
-        }).catch(e=>console.warn(e));
-        
-    });
+        }).catch(e=>console.warn(e)); 
+    }); */
+
+
 
 </script>    
 </body>
