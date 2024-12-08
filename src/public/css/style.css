@@ -1,0 +1,12 @@
+*{ margin: 0; box-sizing: border-box;}
+body{ font-family: system-ui, sans-serif; background: #ddd;}
+
+.container{ max-width: 1200px; margin: auto;  background: #fff;}
+
+header{background: #cfc; padding: 1rem;}
+nav{ background: #222; padding: 1rem;}
+nav a{ text-decoration: none; display: inline-block; padding: .5rem 1rem; color: #fff;}
+main{background: #fff; padding: 1rem;}
+footer{background: #222; color: #ddd; padding: 1rem;}
+
+p{ margin: 10px 0;}

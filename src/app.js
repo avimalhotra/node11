@@ -2,14 +2,26 @@ const express=require("express");
 require('dotenv').config();
 const path=require("path");
 
+
 const port=process.env.PORT || 8080;
 
 const app=express();
+
+const ejs=require('ejs');
+app.set('view engine', 'ejs');
+
+const { LRUCache } = require('lru-cache')
+
+ejs.cache =new LRUCache({max:100});                                
+
+app.set('views', path.join(__dirname, 'public/views'));
+
+
 const admin=require("./routes/admin"), user=require("./routes/user");
 
- app.use(express.static(path.resolve("src/public")));
+app.use(express.static(path.resolve("src/public")));
 
- const bp=require("body-parser");
+const bp=require("body-parser");
 app.use(bp.json());
 
 
@@ -62,8 +74,13 @@ const upload=multer({storage:storage});
  app.get("/",(req,res)=>{    
     res.setHeader('Content-Type','text/html');
     // res.status(200).send(`Hello Express App , Session id: ${req.sessionID}, Views: ${ req.session.views['/'] }`);
-    res.status(200).send(`Hello Express App`);
+    // res.status(200).send(`Hello Express App`);
+    res.status(200).render('index', { title:"EJS Template", year : new Date().getFullYear(), car:{ name:"swift",power:82}, month:["jan","feb","mar","apr"] } );
 });
+
+app.get("/about",(req,res)=>{   
+    res.status(200).render('about',{ title:"ABOUT US",  year : new Date().getFullYear()})
+ })
 
 /* upload */
 
